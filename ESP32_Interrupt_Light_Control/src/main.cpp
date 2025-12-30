@@ -11,7 +11,7 @@ volatile int num = 0;  // volatile确保变量在中断中被正确修改
 // 中断回调函数（中断服务函数）
 void IRAM_ATTR service_exit5() {
   num++;  // 中断次数累加
-  // 串口打印中断次数（注意：中断中串口打印可能有延迟，仅作功能演示）
+  // 串口打印中断次数（中断中串口打印仅作演示，实际建议减少中断内耗时操作）
   Serial.printf("The count of Exit5: %d\n", num);
   // 翻转D3灯状态
   digitalWrite(LED_D3, !digitalRead(LED_D3));
@@ -30,10 +30,10 @@ void setup() {
   pinMode(LED_D3, OUTPUT);
   digitalWrite(LED_D3, LOW);
 
-  // 配置外部中断：GPIO5，下降沿触发，绑定回调函数
-  attachInterrupt(digitalPinToInterrupt(INT_PIN), service_exit5, FALLING);
+  // 核心修改：中断触发方式改为电平改变（CHANGE）
+  attachInterrupt(digitalPinToInterrupt(INT_PIN), service_exit5, CHANGE);
 
-  Serial.println("程序启动，外部中断配置完成");
+  Serial.println("程序启动，外部中断配置为电平改变触发");
 }
 
 void loop() {
