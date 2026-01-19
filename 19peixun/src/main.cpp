@@ -5,12 +5,13 @@
 void setup()
 {
   pinMode(pin,OUTPUT);
+  digitalWrite(pin,HIGH);
 }
 
 void loop()
 {
-  digitalWrite(pin,HIGH);
-  delay (3000);
   digitalWrite(pin,LOW);
+  delay (3000);
+  digitalWrite(pin,HIGH);
   delay (3000);
 }
