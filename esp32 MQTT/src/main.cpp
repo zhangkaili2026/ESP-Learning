@@ -61,11 +61,9 @@ void loop()
   // 发送串口数据
   if (Serial.available())
   {
-    String message = Serial.readStringUntil('\n');
-    message.trim(); // 移除首尾空格
-    Serial.print("发送消息: ");
-    Serial.println(message);
-    publishMessage(publishTopic, message.c_str());
+    String command = Serial.readStringUntil('\n');
+    command.trim(); // 移除首尾空格
+    publishMessage(publishTopic, command.c_str());
   }
 }
 
